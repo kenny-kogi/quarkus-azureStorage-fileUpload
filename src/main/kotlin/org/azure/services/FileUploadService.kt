@@ -4,6 +4,7 @@ import io.vertx.core.impl.logging.Logger
 import io.vertx.core.impl.logging.LoggerFactory
 import org.jboss.resteasy.plugins.providers.multipart.InputPart
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput
+import java.net.URL
 import javax.enterprise.context.ApplicationScoped
 import javax.inject.Inject
 
@@ -24,6 +25,10 @@ class FileUploadService {
         }
 
         return "File Successfully Uploaded"
+    }
+
+    fun readFile(fileName: String): URL? {
+        return azureFileStorageService.readFile(fileName)
     }
 
 }

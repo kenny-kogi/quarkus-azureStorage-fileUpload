@@ -5,10 +5,7 @@ import org.jboss.resteasy.annotations.providers.multipart.MultipartForm
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput
 import javax.enterprise.context.ApplicationScoped
 import javax.inject.Inject
-import javax.ws.rs.Consumes
-import javax.ws.rs.POST
-import javax.ws.rs.Path
-import javax.ws.rs.Produces
+import javax.ws.rs.*
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 
@@ -25,6 +22,15 @@ class FileUploadResource {
     @Produces(MediaType.APPLICATION_JSON)
     fun fileUpload(@MultipartForm files: MultipartFormDataInput): Response {
         val message = fileUploadService.uploadFiles(files)
+        return Response.ok().entity(message).build()
+    }
+
+    @Path("read/{filename}")
+    @GET
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    fun readFile(@PathParam("filename") fileName: String): Response {
+        val message = fileUploadService.readFile(fileName)
         return Response.ok().entity(message).build()
     }
 }

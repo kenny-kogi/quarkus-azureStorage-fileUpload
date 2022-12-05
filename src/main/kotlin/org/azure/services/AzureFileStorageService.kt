@@ -53,10 +53,8 @@ class AzureFileStorageService {
                 .buildAsyncClient()
 
         val header: MultivaluedMap<String, String> = inputFile!!.headers
+
         var fileName = getFileName(header)
-        logger.info("Single file upload!")
-        logger.info("fileName : $fileName")
-        logger.info("fileSize: ${inputFile.headers.size}")
         val inputStream = inputFile.getBody(InputStream::class.java, null)
 
         val blob: BlobAsyncClient = container.getBlobAsyncClient(fileName)
@@ -78,10 +76,8 @@ class AzureFileStorageService {
     // read file from azure
     fun readFile(filename: String): URL?{
         val sasToken = generateCustomSaasToken()
-        logger.info("SAS Token $sasToken")
         val signedUrl = "$blobUrl/$filename?$sasToken"
         logger.info("Signed URL $signedUrl")
-        println("Signed Url: $signedUrl")
         return URL(signedUrl)
     }
 
